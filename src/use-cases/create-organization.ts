@@ -3,7 +3,7 @@ import { Organization } from "generated/prisma/client"
 import { hash } from "bcryptjs"
 import { OrganizationAlreadyExistsError } from "./errors/organization-already-exists"
 import { getLocaleInfos } from "@/utils/get-locale-infos"
-import { ResourceNotFoundError } from "./errors/resource-not-found"
+import { InvalidZipCodeError } from "./errors/invalid-zip-code"
 
 interface CreateOrganizationUseCaseRequest {
   name: string
@@ -41,7 +41,7 @@ export class CreateOrganizationUseCase {
     const localeInfos = await getLocaleInfos(zipCode)
 
     if (!localeInfos) {
-      throw new ResourceNotFoundError()
+      throw new InvalidZipCodeError()
     }
 
     const organization = await this.organizationsRepository.create({
