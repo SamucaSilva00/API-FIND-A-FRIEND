@@ -1,8 +1,11 @@
 import { Organization, Prisma } from 'generated/prisma/client.js'
 import { OrganizationsRepository } from '../organizations-repository.js'
+import { InMemoryPetsRepository } from './in-memory-pets-repository.js'
 
 export class InMemoryOrganizationsRepository implements OrganizationsRepository {
   public items: Organization[] = []
+
+  constructor(private petsRepository: InMemoryPetsRepository) {}
   
   async findById(id: number) {
     const organization = this.items.find((item) => item.id === id)
@@ -11,7 +14,12 @@ export class InMemoryOrganizationsRepository implements OrganizationsRepository 
       return null
     }
 
-    return organization
+    const pets = this.petsRepository?.items.filter((item) => item.org_id === id) ?? []
+
+    return {
+      ...organization,
+      pets,
+    }
   }
 
   async findByEmail(email: string) {

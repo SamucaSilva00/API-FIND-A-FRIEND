@@ -8,6 +8,9 @@ export class PrismaOrganizationsRepository implements OrganizationsRepository {
       where: {
         id,
       },
+      include: {
+        pets: true,
+      },
     })
     return organization
   }

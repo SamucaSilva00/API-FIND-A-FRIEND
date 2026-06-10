@@ -9,8 +9,14 @@ export interface FindManyPetsParams {
   type?: string
 }
 
+export type PetWithOrganization = Prisma.PetGetPayload<{
+  include: {
+    organization: true
+  }
+}>
+
 export interface PetsRepository {
   findMany(params: FindManyPetsParams): Promise<Pet[]>
-  findById(id: number): Promise<Pet | null>
+  findById(id: number): Promise<PetWithOrganization | null>
   create(data: Prisma.PetUncheckedCreateInput): Promise<Pet>
 }

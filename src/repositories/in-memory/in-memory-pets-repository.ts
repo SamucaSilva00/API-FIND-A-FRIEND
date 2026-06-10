@@ -1,21 +1,37 @@
 import { Pet, Prisma } from 'generated/prisma/client.js'
-import { FindManyPetsParams, PetsRepository } from '../pets-repository.js'
+import {
+  FindManyPetsParams,
+  PetsRepository,
+  PetWithOrganization,
+} from '../pets-repository.js'
+import { InMemoryOrganizationsRepository } from './in-memory-organizations-repository.js'
 
 export class InMemoryPetsRepository implements PetsRepository {
   public items: Pet[] = []
+
+  constructor(private organizationsRepository: InMemoryOrganizationsRepository) {}
   
     findMany(params: FindManyPetsParams): Promise<Pet[]> {
       throw new Error('Method not implemented.')
     }
   
-  async findById(id: number) {
+  async findById(id: number): Promise<PetWithOrganization | null> {
     const pet = this.items.find((item) => item.id === id)
 
     if (!pet) {
       return null
     }
 
-    return pet
+    const organization = await this.organizationsRepository.findById(pet.org_id)
+
+    if (!organization) {
+      return null
+    }
+
+    return {
+      ...pet,
+      organization,
+    }
   }
 
   async create(data: Prisma.PetUncheckedCreateInput) {

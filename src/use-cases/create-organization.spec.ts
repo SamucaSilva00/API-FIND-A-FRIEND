@@ -3,13 +3,16 @@ import { CreateOrganizationUseCase } from './create-organization.js'
 import { InMemoryOrganizationsRepository } from '@/repositories/in-memory/in-memory-organizations-repository.js'
 import { InvalidZipCodeError } from './errors/invalid-zip-code.js'
 import { OrganizationAlreadyExistsError } from './errors/organization-already-exists.js'
+import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository.js'
 
 let organizationsRepository: InMemoryOrganizationsRepository
+let petsRepository: InMemoryPetsRepository
 let sut: CreateOrganizationUseCase
 
 describe('Create Organization Use Case', () => {
   beforeEach(() => {
-    organizationsRepository = new InMemoryOrganizationsRepository()
+    petsRepository = new InMemoryPetsRepository(organizationsRepository)
+    organizationsRepository = new InMemoryOrganizationsRepository(petsRepository)
     sut = new CreateOrganizationUseCase(organizationsRepository)
   })
 
