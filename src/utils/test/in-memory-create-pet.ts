@@ -27,5 +27,5 @@ export async function inMemoryCreatePet(organizationRepository: InMemoryOrganiza
     orgId: organization.id
   })
 
-  return { pet }
+  return { pet, organization }
 }

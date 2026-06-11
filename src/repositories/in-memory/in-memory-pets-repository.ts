@@ -11,9 +11,26 @@ export class InMemoryPetsRepository implements PetsRepository {
 
   constructor(private organizationsRepository: InMemoryOrganizationsRepository) {}
   
-    findMany(params: FindManyPetsParams): Promise<Pet[]> {
-      throw new Error('Method not implemented.')
-    }
+  async findMany(params: FindManyPetsParams) {
+    const pets = this.items.filter((pet) => {
+      const organization = this.organizationsRepository.items.find((org) => org.id === pet.org_id)
+  
+      if (!organization) return false
+  
+      if (organization.city !== params.city) return false
+      if (organization.state !== params.state) return false
+  
+      if (params.age != null && pet.age !== params.age) return false
+      if (params.size && pet.size !== params.size) return false
+      if (params.type && pet.type !== params.type) return false
+      if (params.energy_level && pet.energy_level !== params.energy_level) return false
+      if (params.independence_level && pet.independence_level !== params.independence_level) return false
+  
+      return true
+    })
+  
+    return pets
+  }
   
   async findById(id: number): Promise<PetWithOrganization | null> {
     const pet = this.items.find((item) => item.id === id)
