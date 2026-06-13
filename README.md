@@ -1,12 +1,27 @@
 # Find a Friend API
 
-API REST para adoção de pets. Organizações cadastram animais e qualquer pessoa pode buscá-los por cidade, estado e características.
+API REST para conectar organizações de adoção de pets com pessoas que buscam um novo amigo. Desenvolvida durante o curso **Node.js** da [Rocketseat](https://www.rocketseat.com.br/).
 
-Projeto desenvolvido no curso **Node.js** da [Rocketseat](https://www.rocketseat.com.br/).
+Organizações (ONGs, abrigos, etc.) cadastram pets disponíveis para adoção. Qualquer pessoa pode buscar pets por cidade, estado e características como porte, idade e nível de energia.
 
-## Stack
+## Funcionalidades
 
-Node.js, TypeScript, Fastify, Prisma, PostgreSQL, Zod e Vitest.
+- Cadastro e autenticação de organizações (JWT + refresh token via cookie)
+- Perfil da organização autenticada
+- Cadastro de pets (rota protegida)
+- Listagem de pets com filtros por localização e características
+- Detalhes de um pet específico (inclui dados da organização responsável)
+- Preenchimento automático de endereço a partir do CEP (ViaCEP)
+
+## Tecnologias
+
+- [Node.js](https://nodejs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Fastify](https://fastify.dev/)
+- [Prisma ORM](https://www.prisma.io/) + PostgreSQL
+- [Zod](https://zod.dev/) — validação de variáveis de ambiente e payloads
+- [Vitest](https://vitest.dev/) + [Supertest](https://github.com/ladjs/supertest) — testes unitários e E2E
+- [bcryptjs](https://github.com/dcodeIO/bcrypt.js) — hash de senhas
 
 ## Como rodar
 
