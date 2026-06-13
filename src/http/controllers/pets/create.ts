@@ -18,7 +18,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   const { name, description, type, age, size, energyLevel, independenceLevel, orgId } = createPetBodySchema.parse(request.body)
 
   const petUseCase = MakeCreatePetUseCase()
-  await petUseCase.execute({
+  const pet = await petUseCase.execute({
     name,
     description,
     type,
@@ -29,5 +29,5 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     orgId,
   })
 
-  return reply.status(201).send()
+  return reply.status(201).send({ pet })
 }

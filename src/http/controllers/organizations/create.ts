@@ -16,7 +16,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   const { name, email, description, zipCode, whatsappNumber, password } = createOrganizationBodySchema.parse(request.body)
 
   const registerUseCase = MakeCreateOrganizationUseCase()
-  await registerUseCase.execute({
+  const organization = await registerUseCase.execute({
     name,
     email,
     description,
@@ -25,5 +25,5 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     password,
   })
 
-  return reply.status(201).send()
+  return reply.status(201).send({ organization })
 }

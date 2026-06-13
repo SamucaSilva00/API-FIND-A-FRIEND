@@ -1,4 +1,3 @@
-import { Pet } from 'generated/prisma/client.js'
 import { FindManyPetsParams, PetsRepository } from '../pets-repository.js'
 import { PetUncheckedCreateInput } from 'generated/prisma/models.js'
 import { prisma } from '@/prisma'
